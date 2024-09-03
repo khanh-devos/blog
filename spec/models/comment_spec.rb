@@ -24,5 +24,4 @@ RSpec.describe Comment, type: :model do
     create_list(:comment, 2, user: user)
     expect(user.comments.count).to eq(2)
   end
-
 end

@@ -53,5 +53,3 @@ group :development do
   gem "factory_bot_rails"     # Optional: for setting up test data
   gem "capybara"              # Optional: for feature tests
 end
-
-

@@ -33,5 +33,4 @@ RSpec.describe User, type: :model do
     assc = described_class.reflect_on_association(:likes)
     expect(assc.macro).to eq :has_many
   end
-
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Topic, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  # pending "add some examples to (or delete) #{__FILE__}"
 
   it 'topic is valid with valid attributes' do
     topic = create(:topic)
@@ -28,5 +28,4 @@ RSpec.describe Topic, type: :model do
     create_list(:topic, 2, user: user)   # 2 topics associated with the user.
     expect(user.topics.count).to eq(2)
   end
-
 end

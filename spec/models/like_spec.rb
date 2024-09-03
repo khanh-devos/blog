@@ -29,5 +29,4 @@ RSpec.describe Like, type: :model do
     create_list(:like, 2, user: user)
     expect(user.likes.count).to eq(2)
   end
-
 end
