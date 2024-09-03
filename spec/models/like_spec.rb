@@ -7,7 +7,7 @@ RSpec.describe Like, type: :model do
     like = create(:like)
     expect(like).to be_valid
   end
-  
+
   it 'value should be present' do
     like = create(:like, value: nil)
     expect(like).to_not be_valid
