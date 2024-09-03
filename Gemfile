@@ -49,9 +49,9 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
-  gem 'rspec-rails', '~> 7.0' # Adjust the version as needed
-  gem 'factory_bot_rails'     # Optional: for setting up test data
-  gem 'capybara'              # Optional: for feature tests
+  gem "rspec-rails", "~> 7.0" # Adjust the version as needed
+  gem "factory_bot_rails"     # Optional: for setting up test data
+  gem "capybara"              # Optional: for feature tests
 end
 
 
