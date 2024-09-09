@@ -2,30 +2,39 @@ require 'rails_helper'
 
 RSpec.describe Topic, type: :model do
   # pending "add some examples to (or delete) #{__FILE__}"
+  let!(:admin) { create(:admin) }
+  let!(:topic) { create(:topic, author: admin) }
 
-  it 'topic is valid with valid attributes' do
-    topic = create(:topic)
+  it 'valid with valid attributes' do
     expect(topic).to be_valid
   end
 
   it 'title should be present' do
-    topic = create(:topic, title: nil)
+    topic.title = nil
     expect(topic).to_not be_valid
+    expect(topic.errors[:title]).to include("can't be blank")
   end
 
-  it 'img_url should be present' do
-    topic = create(:topic, img_url: nil)
-    expect(topic).to_not be_valid
+  it 'could have no img_url' do
+    topic.img_url = nil
+    expect(topic).to be_valid
   end
 
   it 'content should be present' do
-    topic = create(:topic, content: nil)
+    topic.content = nil
     expect(topic).to_not be_valid
+    expect(topic.errors[:content]).to include("can't be blank")
   end
 
-  it 'belongs to a user' do
-    user = create(:user)
-    create_list(:topic, 2, user: user)   # 2 topics associated with the user.
-    expect(user.topics.count).to eq(2)
+  it 'content should be less than 2000' do
+    topic.content = 'a' * 2001
+    expect(topic).to_not be_valid
+    expect(topic.errors[:content]).to include("maximum is 2000 characters")
+  end
+
+  it 'associated many-to-one with Admin' do
+    topic2 = create(:topic, author: admin)
+    expect(admin.topics).to include(topic, topic2)
+    expect(admin.topics.count).to eql(2)
   end
 end
