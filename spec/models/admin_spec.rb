@@ -9,19 +9,14 @@ RSpec.describe Admin, type: :model do
       expect(admin).to be_valid
     end
 
-    it 'role should be present' do
-      admin.role = nil
-      expect(admin).to_not be_valid
-    end
-
-    it 'role should be among [owner monitor client]' do
-      expect(described_class.roles.keys).to include('owner', 'monitor', 'client')
-    end
-
     it 'permission should be present' do
       admin.permission = nil
       expect(admin).to_not be_valid
       expect(admin.errors[:permission]).to include("can't be blank")
+    end
+
+    it 'permission should be among [Full_control_on_Topic Full_control_on_Comment_or_Like]' do
+      expect(described_class.permissions.keys).to include('Full_control_on_Topic', 'Full_control_on_Comment_or_Like')
     end
   end
 
@@ -55,10 +50,6 @@ RSpec.describe Admin, type: :model do
   end
 
   context 'ASSOCIATION' do
-    it 'permission should be among ["A", "B", "C"]' do
-      expect(described_class.permissions.keys).to include('A', 'B', 'C')
-    end
-
     it 'association with user is has_one' do
       assc = described_class.reflect_on_association(:users)
       expect(assc.macro).to eql :has_one

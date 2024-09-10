@@ -1,9 +1,8 @@
 class Admin < ApplicationRecord
-  enum :role, { owner: "owner", monitor: "monitor", client: "client" }
-  enum :permission, { A: "A", B: "B", C: "C" }
-  # A: full control
-  # B: full control, exclude User
-  # C: full control only over Comment, Like
+  enum :permission, {
+    Full_control_on_Topic: "Full_control_on_Topic",
+    Full_control_on_Comment_or_Like: "Full_control_on_Comment_or_Like"
+  }
 
   # one-one relationship
   has_one :users, as: :function, dependent: :destroy
@@ -18,6 +17,5 @@ class Admin < ApplicationRecord
     too_long: "too long, maximum is %{count} characters"
   }
 
-  validates :role, presence: true
   validates :permission, presence: true
 end

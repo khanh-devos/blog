@@ -10,21 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_09_114750) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_10_154807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "user_permissions", ["A", "B", "C"]
-  create_enum "user_roles", ["owner", "monitor", "client"]
+  create_enum "user_permissions", ["Full_control_on_Topic", "Full_control_on_Comment_or_Like"]
 
   create_table "admins", force: :cascade do |t|
     t.string "username", limit: 100, null: false
-    t.enum "role", default: "client", null: false, enum_type: "user_roles"
-    t.enum "permission", default: "C", null: false, enum_type: "user_permissions"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "permission", default: "Full_control_on_Comment_or_Like", null: false, enum_type: "user_permissions"
     t.index ["username"], name: "unique_username", unique: true
   end
 

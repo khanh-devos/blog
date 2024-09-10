@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :admin do
     username { "MyString" }
-    role { "client" }
-    permission { "C" }
+    permission { "Full_control_on_Comment_or_Like" }
   end
 end
