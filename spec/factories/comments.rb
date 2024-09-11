@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :comment do
-    content { "this is a comment from user on the topic" }
+    content { "factorybotrails comment" }
     association :user
     association :topic
   end
