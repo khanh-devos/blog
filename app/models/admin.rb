@@ -19,4 +19,13 @@ class Admin < ApplicationRecord
   }
 
   validates :permission, presence: true
+
+  # You can also define helper methods for readability
+  def can_control_topic?
+    permission == "Full_control_on_Topic"
+  end
+
+  def can_control_comments_or_likes?
+    permission == "Full_control_on_Comment_or_Like"
+  end
 end

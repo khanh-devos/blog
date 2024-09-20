@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  # resources :topics
+  resources :topics
   resources :admins
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
