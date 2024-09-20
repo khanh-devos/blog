@@ -16,15 +16,15 @@ class User < ApplicationRecord
 
   # Allow Devise to authenticate with either admin username or user email
   attr_writer :login
-  
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))
       admin = Admin.find_by(username: login)
       if admin && admin.user
-        return admin.user
+        admin.user
       else
-        return where(conditions.to_h).where(["lower(email) = :value", { value: login.downcase }]).first
+        where(conditions.to_h).where([ "lower(email) = :value", { value: login.downcase } ]).first
       end
     else
       where(conditions.to_h).first

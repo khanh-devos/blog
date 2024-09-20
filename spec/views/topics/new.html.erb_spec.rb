@@ -13,7 +13,6 @@ RSpec.describe "topics/new", type: :view do
     render
 
     assert_select "form[action=?][method=?]", topics_path, "post" do
-
       assert_select "input[name=?]", "topic[title]"
 
       assert_select "input[name=?]", "topic[img_url]"

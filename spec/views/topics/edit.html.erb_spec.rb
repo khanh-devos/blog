@@ -17,7 +17,6 @@ RSpec.describe "topics/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", topic_path(topic), "post" do
-
       assert_select "input[name=?]", "topic[title]"
 
       assert_select "input[name=?]", "topic[img_url]"

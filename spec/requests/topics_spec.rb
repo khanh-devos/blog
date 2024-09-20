@@ -13,7 +13,6 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/topics", type: :request do
-  
   # This should return the minimal set of attributes required to create a valid
   # Topic. As you add validations to Topic, be sure to
   # adjust the attributes here as well.
@@ -117,12 +116,11 @@ RSpec.describe "/topics", type: :request do
         }.to change(Topic, :count).by(0)
       end
 
-    
+
       it "renders a response with 422 status" do
         post topics_url, params: { topic: invalid_attributes_title_empty }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 
@@ -158,7 +156,6 @@ RSpec.describe "/topics", type: :request do
         patch topic_url(topic), params: { topic: invalid_attributes_title_empty }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 

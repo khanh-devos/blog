@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[ index show ]
 
   before_action :authorize_admin_for_topic, only: %i[ new create edit update destroy ]
-  
+
   before_action :set_topic, only: %i[ show edit update destroy ]
 
   # GET /topics or /topics.json
@@ -79,6 +79,4 @@ class TopicsController < ApplicationController
       redirect_to root_path, alert: "You are not authorized to manage topics."
     end
   end
-
-
 end

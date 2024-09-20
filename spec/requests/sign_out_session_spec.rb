@@ -12,7 +12,7 @@ RSpec.describe 'User Authentication', type: :request do
 
     expect(controller.user_signed_in?).to be false
     expect(controller.current_user).to_not be_present
-    
+
     follow_redirect!  # Follow the redirect to the sign-in page
     expect(response).to have_http_status(:ok)  # Ensure the sign-in page loads successfully
 
