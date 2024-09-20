@@ -3,7 +3,7 @@ class AdminsController < ApplicationController
 
   def admin_sign_out
     sign_out(current_user)
-    redirect_to '/', notice: 'Signed out successfully.'
+    redirect_to "/", notice: "Signed out successfully."
   end
 
   # GET /admins or /admins.json
@@ -71,6 +71,6 @@ class AdminsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def admin_params
-      params.require(:admin).permit(:username, :permission, user_attributes: [:email, :password, :password_confirmation])
+      params.require(:admin).permit(:username, :permission, user_attributes: [ :email, :password, :password_confirmation ])
     end
 end

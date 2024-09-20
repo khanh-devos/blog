@@ -17,3 +17,7 @@
 .permission_select {
   background-color: aqua;
 }
+
+.std_padding {
+  padding-left: 5px;
+}

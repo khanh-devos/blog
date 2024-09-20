@@ -16,7 +16,7 @@ RSpec.describe "/admins", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Admin. As you add validations to Admin, be sure to
   # adjust the attributes here as well.
-  
+
   let(:valid_attributes) {
     {
       username: "Valid Admin Name",
@@ -77,20 +77,20 @@ RSpec.describe "/admins", type: :request do
     }
   }
 
-  
+
   describe "GET request" do
-    let!(:admin){ Admin.create! valid_attributes }
-    
+    let!(:admin) { Admin.create! valid_attributes }
+
     it "/index renders a successful response" do
       get admins_url
       expect(response).to be_successful
     end
-  
+
     it "/show renders a successful response" do
       get admin_url(admin)
       expect(response).to be_successful
     end
-  
+
     it "/new renders a successful response" do
       get new_admin_url
       expect(response).to be_successful
@@ -101,7 +101,7 @@ RSpec.describe "/admins", type: :request do
       expect(response).to be_successful
     end
   end
-  
+
   describe "POST /create" do
     context "with valid parameters" do
       it "creates a new Admin" do
@@ -149,7 +149,7 @@ RSpec.describe "/admins", type: :request do
   end
 
   describe "PATCH /update" do
-    let!(:admin){ Admin.create! valid_attributes }
+    let!(:admin) { Admin.create! valid_attributes }
 
     context "with valid parameters" do
       let(:new_attributes_username_password_change) {
@@ -188,8 +188,8 @@ RSpec.describe "/admins", type: :request do
   end
 
   describe "DELETE /destroy" do
-    let!(:admin){ Admin.create! valid_attributes }
-    
+    let!(:admin) { Admin.create! valid_attributes }
+
     it "destroys the requested admin" do
       expect {
         delete admin_url(admin)

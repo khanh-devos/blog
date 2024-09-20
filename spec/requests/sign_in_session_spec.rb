@@ -12,13 +12,13 @@ RSpec.describe 'User Login', type: :request do
           password: 'password123'
         }
       }
-      
-      
+
+
       expect(response).to have_http_status(:see_other) # redirects to a page after successful login
       expect(controller.user_signed_in?).to be true
-      
+
       expect(controller.current_user).to eq(user)  # current_user should now be the logged-in user
-      
+
       follow_redirect!
       expect(response.body).to include('Welcome')
     end
@@ -46,7 +46,7 @@ RSpec.describe 'User Login', type: :request do
           password: 'password123'
         }
       }
-      
+
       expect(response).to have_http_status(:see_other)
       expect(controller.current_user).to eq(user)
     end
@@ -61,10 +61,9 @@ RSpec.describe 'User Login', type: :request do
 
       expect(controller.user_signed_in?).to be false
       expect(controller.current_user).to_not be_present
-      
+
       expect(response.body).to_not include('Welcome')
       # expect(response).to have_http_status(:unauthorized)
     end
   end
 end
-

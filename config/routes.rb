@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  # resources :topics
+  resources :topics
   resources :admins
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  devise_for :users, controllers: { sessions: "users/sessions" }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -18,6 +18,6 @@ Rails.application.routes.draw do
 
   get "/sign_out" => "admins#admin_sign_out"
 
-  get 'admin_dashboard', to: 'admins#index', as: :admin_dashboard
-  get 'visitor_dashboard', to: 'visitors#index', as: :visitor_dashboard
+  get "admin_dashboard", to: "admins#index", as: :admin_dashboard
+  get "visitor_dashboard", to: "visitors#index", as: :visitor_dashboard
 end
