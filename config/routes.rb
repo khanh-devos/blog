@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  resources :topics
+  # resources :topics
   resources :admins
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'users/sessions' }
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -13,5 +14,10 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  root "home#index"
+  root "admins#index"
+
+  get "/sign_out" => "admins#admin_sign_out"
+
+  get 'admin_dashboard', to: 'admins#index', as: :admin_dashboard
+  get 'visitor_dashboard', to: 'visitors#index', as: :visitor_dashboard
 end

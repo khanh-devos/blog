@@ -51,7 +51,7 @@ RSpec.describe Admin, type: :model do
 
   context 'ASSOCIATION' do
     it 'association with user is has_one' do
-      assc = described_class.reflect_on_association(:users)
+      assc = described_class.reflect_on_association(:user)
       expect(assc.macro).to eql :has_one
     end
 

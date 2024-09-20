@@ -4,5 +4,6 @@ class Visitor < ApplicationRecord
     too_long: "too long, maximum is %{count} characters"
   }
 
-  has_one :users, as: :function, dependent: :destroy
+  has_one :user, as: :function, dependent: :destroy
+  accepts_nested_attributes_for :user
 end

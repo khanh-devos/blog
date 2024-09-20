@@ -5,7 +5,8 @@ class Admin < ApplicationRecord
   }
 
   # one-one relationship
-  has_one :users, as: :function, dependent: :destroy
+  has_one :user, as: :function, dependent: :destroy
+  accepts_nested_attributes_for :user
 
   # many-to-one relationship with custom foreign_key
   has_many :topics, foreign_key: :author_id, dependent: :destroy

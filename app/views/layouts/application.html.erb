@@ -18,6 +18,19 @@
   </head>
 
   <body>
+    <% if user_signed_in?  %>
+      <h5>Welcome: <%= current_user.function_type.to_s %>
+          <%= current_user.function.try(:username) || "#{current_user.function.surname} + '_' + #{current_user.function.lastname}" %>
+      </h5>
+
+      <%= link_to 'Log Out', sign_out_path  %>
+    <% else %>
+      <%= link_to 'Log In', new_user_session_path  %>
+
+    <% end %>
+
+    <a></a>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 

@@ -1,6 +1,11 @@
 class AdminsController < ApplicationController
   before_action :set_admin, only: %i[ show edit update destroy ]
 
+  def admin_sign_out
+    sign_out(current_user)
+    redirect_to '/', notice: 'Signed out successfully.'
+  end
+
   # GET /admins or /admins.json
   def index
     @admins = Admin.all
@@ -13,6 +18,7 @@ class AdminsController < ApplicationController
   # GET /admins/new
   def new
     @admin = Admin.new
+    @admin.build_user unless @admin.user # prepare for nested form
   end
 
   # GET /admins/1/edit
@@ -65,6 +71,6 @@ class AdminsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def admin_params
-      params.require(:admin).permit(:username, :permission)
+      params.require(:admin).permit(:username, :permission, user_attributes: [:email, :password, :password_confirmation])
     end
 end

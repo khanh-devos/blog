@@ -16,45 +16,92 @@ RSpec.describe "/admins", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Admin. As you add validations to Admin, be sure to
   # adjust the attributes here as well.
+  
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      username: "Valid Admin Name",
+      permission: "Full_control_on_Comment_or_Like",
+      user_attributes: {
+        email: "admin@example.com",
+        password: "password123",
+        password_confirmation: "password123"
+      }
+    }
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+  let(:invalid_attributes_missing_name) {
+    {
+      username: "",
+      permission: "Full_control_on_Comment_or_Like",
+      user_attributes: {
+        email: "admin@example.com",
+        password: "password123",
+        password_confirmation: "password123"
+      }
+    }
   }
 
-  describe "GET /index" do
-    it "renders a successful response" do
-      Admin.create! valid_attributes
+  let(:invalid_attributes_invalid_email) {
+    {
+      username: "valid Admin name",
+      permission: "Full_control_on_Comment_or_Like",
+      user_attributes: {
+        email: "admin_email",
+        password: "password123",
+        password_confirmation: "password123"
+      }
+    }
+  }
+
+  let(:invalid_attributes_password_len_5) {
+    {
+      username: "valid Admin name",
+      permission: "Full_control_on_Comment_or_Like",
+      user_attributes: {
+        email: "admin_email",
+        password: "p@ss1",
+        password_confirmation: "p@ss1"
+      }
+    }
+  }
+
+  let(:invalid_attributes_password_mismatch) {
+    {
+      username: "valid Admin name",
+      permission: "Full_control_on_Comment_or_Like",
+      user_attributes: {
+        email: "admin_email",
+        password: "password1234",
+        password_confirmation: "password123"
+      }
+    }
+  }
+
+  
+  describe "GET request" do
+    let!(:admin){ Admin.create! valid_attributes }
+    
+    it "/index renders a successful response" do
       get admins_url
       expect(response).to be_successful
     end
-  end
-
-  describe "GET /show" do
-    it "renders a successful response" do
-      admin = Admin.create! valid_attributes
+  
+    it "/show renders a successful response" do
       get admin_url(admin)
       expect(response).to be_successful
     end
-  end
-
-  describe "GET /new" do
-    it "renders a successful response" do
+  
+    it "/new renders a successful response" do
       get new_admin_url
       expect(response).to be_successful
     end
-  end
 
-  describe "GET /edit" do
-    it "renders a successful response" do
-      admin = Admin.create! valid_attributes
+    it "/edit renders a successful response" do
       get edit_admin_url(admin)
       expect(response).to be_successful
     end
   end
-
+  
   describe "POST /create" do
     context "with valid parameters" do
       it "creates a new Admin" do
@@ -70,36 +117,63 @@ RSpec.describe "/admins", type: :request do
     end
 
     context "with invalid parameters" do
-      it "does not create a new Admin" do
+      it "does not create a new Admin with missing name" do
         expect {
-          post admins_url, params: { admin: invalid_attributes }
+          post admins_url, params: { admin: invalid_attributes_missing_name }
         }.to change(Admin, :count).by(0)
       end
 
+      it "does not create a new Admin with invalid email" do
+        expect {
+          post admins_url, params: { admin: invalid_attributes_invalid_email }
+        }.to change(Admin, :count).by(0)
+      end
+
+      it "does not create a new Admin with password less than 6 characters" do
+        expect {
+          post admins_url, params: { admin: invalid_attributes_password_len_5 }
+        }.to change(Admin, :count).by(0)
+      end
+
+      it "does not create a new Admin with password mismatch" do
+        expect {
+          post admins_url, params: { admin: invalid_attributes_password_mismatch }
+        }.to change(Admin, :count).by(0)
+      end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post admins_url, params: { admin: invalid_attributes }
+        post admins_url, params: { admin: invalid_attributes_invalid_email }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe "PATCH /update" do
+    let!(:admin){ Admin.create! valid_attributes }
+
     context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+      let(:new_attributes_username_password_change) {
+        {
+          username: "New Valid Admin Name",
+          permission: "Full_control_on_Comment_or_Like",
+          user_attributes: {
+            email: "newadmin@example.com",
+            password: "password123",
+            password_confirmation: "password123"
+          }
+        }
       }
 
       it "updates the requested admin" do
-        admin = Admin.create! valid_attributes
-        patch admin_url(admin), params: { admin: new_attributes }
+        patch admin_url(admin), params: { admin: new_attributes_username_password_change }
         admin.reload
-        skip("Add assertions for updated state")
+
+        expect(admin.username).to eq("New Valid Admin Name")
+        expect(admin.user.email).to eq("newadmin@example.com")
       end
 
       it "redirects to the admin" do
-        admin = Admin.create! valid_attributes
-        patch admin_url(admin), params: { admin: new_attributes }
+        patch admin_url(admin), params: { admin: new_attributes_username_password_change }
         admin.reload
         expect(response).to redirect_to(admin_url(admin))
       end
@@ -107,23 +181,22 @@ RSpec.describe "/admins", type: :request do
 
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        admin = Admin.create! valid_attributes
-        patch admin_url(admin), params: { admin: invalid_attributes }
+        patch admin_url(admin), params: { admin: invalid_attributes_invalid_email }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe "DELETE /destroy" do
+    let!(:admin){ Admin.create! valid_attributes }
+    
     it "destroys the requested admin" do
-      admin = Admin.create! valid_attributes
       expect {
         delete admin_url(admin)
       }.to change(Admin, :count).by(-1)
     end
 
     it "redirects to the admins list" do
-      admin = Admin.create! valid_attributes
       delete admin_url(admin)
       expect(response).to redirect_to(admins_url)
     end
